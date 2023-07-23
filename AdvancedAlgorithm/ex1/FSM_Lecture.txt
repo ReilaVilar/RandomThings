@@ -1,0 +1,38 @@
+
+
+def FSM(haystack, needle):
+    
+    n = len(needle)
+    pi = [0]*n
+    
+    pi[1] = 0
+    j=0    # = pi[k-1]
+    for k in range(2, n, 1):
+        while j>0 and needle[k-1] != needle[j]:
+            j = pi[j]
+        if needle[k-1] == needle[j]:
+            j += 1
+        pi[k] = j
+
+    print(pi)
+    
+    positions = []
+
+    def engineonthefly(q, a):  # q = state   a = next_char
+        if q == n:
+            positions.append(q-n)
+            q = pi[q]
+        while q>0 and needle[q] != a:
+            q = pi[q]
+        if needle[q] == a:
+            q+=1  
+        return q - n
+
+    m = len(haystack)
+    q=0
+    ar = []
+    for i in range(m):
+        ar.append(engineonthefly(q, haystack[i]))
+   
+    print("ar:" , ar[0], " len:",  len(ar))
+    print(positions)

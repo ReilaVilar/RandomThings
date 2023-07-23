@@ -1,0 +1,31 @@
+body{
+    background-color: black;   
+    color:white;
+}
+#current_scheme{
+    width: 150px;
+}
+.ongoing_scheme{
+    position: absolute;
+    width:100px;
+}
+#review_card{
+    height: 100vh;
+}
+#turn_display{
+    position: absolute;
+    margin-left: 200px;
+    font-size: x-large;
+    text-align: center;
+}
+#div_deck{
+    float: left;
+}
+#div_review{
+    margin-top: -400px;
+    margin-left: 450px;
+}
+#dropdown_decks{
+    background-color: black;
+    color: white;
+}

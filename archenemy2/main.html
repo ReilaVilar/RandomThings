@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="a.css">
+    <link rel="shortcut icon" href="/project_final/logo.png">
+    <title>Archenemy</title>
+    <script type="text/javascript" src='decks/allcards.js'></script>
+    <script type="text/javascript" src='decks/dragon.js'></script>
+    <script type="text/javascript" src='decks/chimera.js'></script>
+    <script type="text/javascript" src='decks/dead.js'></script>
+</head>
+<body>
+    <div id="div_currentScheme">
+        <select id="dropdown_decks" onchange="change_deck()">
+            <option value="all">#randomly gathered set#</option>
+            <option value="dragon">Return of Dragons' Era</option>
+            <option value="chimera">Chimera's Wail</option>
+            <option value="death">Dead Shall Not Fall Upon</option>
+        </select>
+        <p>Current Schema: <br><small>(click to pick next)</small><br><br></p>
+        <p id="turn_display">Turn: <br><span id="turn">0</span> </p>
+        <img id="current_scheme" onclick="next_turn()" onmouseover="review_card()" src="" alt="image">
+    </div>
+    <div id="div_ongoingSchemas">
+        <p>Ongoing Schemas: <br><small>(right-click to abandon)</small></p>
+        <script>
+            for(var i = 0; i < 20; i++){
+                document.write("<img id='"+i+"' class='ongoing_scheme' src='' onmouseover='review_card()' oncontextmenu='abandon()' alt='img' hidden></img>");
+            }
+        </script>
+    </div>
+    <div id="div_review">
+        <img id="review_card"  src="" alt="image">
+    </div>
+</body>
+</html>
+
+<script>
+var main_deck = [];
+main_deck = all_deck;
+var deck = [];
+var ongoing_schemes = [];
+var current_img = 0;
+var turn = 0;
+
+var _current_scheme = document.getElementById("current_scheme");
+var _review_card = document.getElementById("review_card");
+
+shuffle_deck();
+current_scheme.src = deck[0];
+_review_card.src = deck[0];
+if_ongoing();
+
+function shuffle_deck(){
+    var temp_array = main_deck;
+    for(var i = 0; i<20;i++){
+        var rand = Math.floor(Math.random() * (temp_array.length-1));
+        var img = temp_array[rand];
+        for(var k = 0; k<deck.length; k++){
+            if(deck[k] == img){
+                temp_array.splice(rand,1);
+            }
+        }
+        deck.push(img);
+    }
+}
+function next_turn(){
+    current_img++;
+    if(current_img >= deck.length){
+        current_img = 0;
+    }
+    var src = deck[current_img];
+    _current_scheme.src = src;
+    turn++;
+    document.getElementById("turn").innerText = turn;
+    review_card();
+    if_ongoing();
+}
+function if_ongoing(){
+    if(deck[current_img].includes('_')){
+        ongoing_schemes.push(deck[current_img]);
+        var removed = deck.splice(current_img, 1);
+        current_img--;
+        display_ongoing_scheme();
+    }
+}
+function review_card(){
+    _review_card.src = event.target.src;
+}
+function display_ongoing_scheme(){
+    for(var i = 0; i < ongoing_schemes.length; i++){
+        var img = document.getElementById(i);
+        img.src = ongoing_schemes[i];
+        img.style = "margin-top:"+ i*30 +"px;";
+        img.addEventListener("contextmenu", e => e.preventDefault());
+        img.hidden = false;
+    }
+    for(var i = ongoing_schemes.length; i<20; i++){
+        var img = document.getElementById(i);
+        img.hidden = true;
+    }
+}
+function abandon(){
+    deck.splice(current_img, 0, ongoing_schemes[event.target.id]);
+    current_img++;
+    ongoing_schemes.splice(event.target.id,1);
+    display_ongoing_scheme();
+}
+function change_deck(){
+    var d = window["dropdown_decks"].value;
+    switch(d){
+        case "dragon": main_deck = dragon_deck; break;
+        case "death": main_deck = dead_deck; break;
+        case "chimera": main_deck = chimera_deck; break;
+        default: main_deck = all_deck;
+    }
+    deck = [];
+    ongoing_schemes = [];
+    current_img = 0;
+    turn = 0;
+    document.getElementById("turn").innerText = turn;
+
+    shuffle_deck();
+    current_scheme.src = deck[0];
+    _review_card.src = deck[0];
+    if_ongoing();
+    display_ongoing_scheme();
+}
+</script>

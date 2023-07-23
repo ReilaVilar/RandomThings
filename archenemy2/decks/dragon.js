@@ -1,0 +1,17 @@
+var dragon_deck = Array();
+dragon_deck[0] = 'cards/_i-bask-in-your-silent-awe.jpg';
+dragon_deck[1] = 'cards/all-shall-smolder-in-my-wake.jpg';
+dragon_deck[2] = 'cards/approach-my-molten-realm.jpg';
+dragon_deck[3] = 'cards/ignite-the-cloneforge.jpg';
+dragon_deck[4] = 'cards/into-the-earthen-maw.jpg';
+dragon_deck[5] = 'cards/look-skyward-and-despair.jpg';
+dragon_deck[6] = 'cards/my-crushing-masterstroke.jpg';
+dragon_deck[7] = 'cards/my-wish-is-your-command.jpg';
+dragon_deck[8] = 'cards/realms-befitting-my-majesty.jpg';
+dragon_deck[9] = 'cards/tooth-claw-and-tail.jpg';
+dragon_deck[10] = 'cards/which-of-you-burns-brightest.jpg';
+dragon_deck[11] = 'cards/your-puny-minds-cannot-fathom.jpg';
+dragon_deck[12] = 'cards/your-will-is-not-your-own.jpg';
+dragon_deck[13] = 'cards/the-fate-of-the-flammable.jpg';
+dragon_deck[14] = 'cards/nature-demands-an-offering.jpg';
+dragon_deck[15] = 'cards/know-naught-but-fire.jpg';
